@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_12684_slack_app.SlackAppHelper</api_name>
+        <client_callable>false</client_callable>
+        <description>Helper class for operations associated with Slack App</description>
+        <name>SlackAppHelper</name>
+        <script><![CDATA[var SlackAppHelper = Class.create();
+SlackAppHelper.prototype = {
+	initialize: function() {
+	},
+	//function to configure the ServiceNow to interact with Slack app
+	configureApp: function(){
+		var oauthProviderSysId;
+		var oauthScopeSysId;
+		var oauthEntityProfilesSysId;
+		//creating oauth provider for authenticating slack app.
+		var oauthProvider_gr = new GlideRecord('oauth_entity');
+		oauthProvider_gr.initialize();
+		oauthProvider_gr.type = 'oauth_provider';
+		oauthProvider_gr.name = 'Slack App';
+		oauthProvider_gr.client_id = gs.getProperty('x_12684_slack_app.slack.client.id');
+		oauthProvider_gr.client_secret = gs.getProperty('x_12684_slack_app.slack.client.secret');
+		oauthProvider_gr.default_grant_type = 'authorization_code';
+		oauthProvider_gr.auth_url = gs.getProperty('x_12684_slack_app.AuthorizationURL');
+		oauthProvider_gr.token_url = gs.getProperty('x_12684_slack_app.TokenUrl');
+		oauthProvider_gr.redirect_url = gs.getProperty('glide.servlet.uri')+'oauth_redirect.do';
+		oauthProviderSysId = oauthProvider_gr.update();
+		//configuring default scopes for slack app.
+		var oauthScope_gr = new GlideRecord('oauth_entity_scope');
+		oauthScope_gr.initialize();
+		oauthScope_gr.name = 'Slack App scopes';
+		oauthScope_gr.oauth_entity = oauthProviderSysId;
+		oauthScope_gr.oauth_entity_scope = gs.getProperty('x_12684_slack_app.scopes');
+		oauthScopeSysId = oauthScope_gr.update();
+		//associate slack app scope with default oauth entity profile
+		var oauthEntityProfilesScope_gr =  new GlideRecord('oauth_entity_profile_scope');
+		oauthEntityProfilesScope_gr.initialize();
+		var oauthEntityProfiles_gr = new GlideRecord('oauth_entity_profile');
+		oauthEntityProfiles_gr.addEncodedQuery('oauth_entity='+oauthProviderSysId);
+		oauthEntityProfiles_gr.query();
+		while(oauthEntityProfiles_gr.next()){
+			oauthEntityProfilesSysId = oauthEntityProfiles_gr.sys_id;
+			oauthEntityProfilesScope_gr.oauth_entity_profile = oauthEntityProfiles_gr.sys_id;
+		}
+		oauthEntityProfilesScope_gr.oauth_entity_scope = oauthScopeSysId;
+		oauthEntityProfilesScope_gr.update();
+		//configure out bound REST Message to authenticate app
+		var restMessage_gr = new GlideRecord('sys_rest_message');
+		restMessage_gr.initialize();
+		restMessage_gr.name = 'Slack App Authorization request';
+		restMessage_gr.rest_endpoint = gs.getProperty('x_12684_slack_app.AuthorizationURL');
+		restMessage_gr.authentication_type = 'oauth2';
+		restMessage_gr.oauth2_profile = oauthEntityProfilesSysId;
+		restMessage_gr.update();
+	},
+	
+	type: 'SlackAppHelper'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>kvallams</sys_created_by>
+        <sys_created_on>2017-02-20 04:29:52</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>SlackAppHelper</sys_name>
+        <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
+        <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
+        <sys_updated_by>kvallams</sys_updated_by>
+        <sys_updated_on>2017-02-20 06:44:43</sys_updated_on>
+    </sys_script_include>
+</record_update>
