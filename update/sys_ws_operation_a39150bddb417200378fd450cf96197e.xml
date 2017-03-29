@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/x-www-form-urlencoded</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>Post </name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+	var isvalidRequest = false;
+	var reqParams = request.queryParams;
+	var responseBody;
+	//gs.info(reqParams.text.toString().split('-')[2]);
+	//verify if the request made is valid
+	if(reqParams.token == gs.getProperty('x_12684_slack_app.command.token')){
+		isvalidRequest = true;
+	}
+	//Parse the text queryParam to get instructions
+	if(isvalidRequest){
+		var slakHelper = new x_12684_slack_app.SlackAppHelper();
+		responseBody = slakHelper.reqParser(reqParams);
+		
+	}
+	response.setContentType('application/json');
+	response.setStatus(200);
+	var writer = response.getStreamWriter();
+	writer.writeString(global.JSON.stringify(responseBody));
+})(request, response);
+]]></operation_script>
+        <operation_uri>/api/x_12684_slack_app/slack_request_handler</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>false</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>kvallams</sys_created_by>
+        <sys_created_on>2017-02-20 10:53:33</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>a39150bddb417200378fd450cf96197e</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>Post </sys_name>
+        <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
+        <sys_update_name>sys_ws_operation_a39150bddb417200378fd450cf96197e</sys_update_name>
+        <sys_updated_by>kvallams</sys_updated_by>
+        <sys_updated_on>2017-02-23 01:34:26</sys_updated_on>
+        <web_service_definition display_value="Slack Request handler">66519c7ddb417200378fd450cf9619fc</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

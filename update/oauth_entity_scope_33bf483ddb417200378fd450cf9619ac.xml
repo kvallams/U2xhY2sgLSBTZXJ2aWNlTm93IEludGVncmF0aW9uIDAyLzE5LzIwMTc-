@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="oauth_entity_scope">
+    <oauth_entity_scope action="INSERT_OR_UPDATE">
+        <name>Slack App scopes</name>
+        <oauth_entity display_value="Slack app test ws">bbbf403ddb417200378fd450cf961916</oauth_entity>
+        <oauth_entity_scope>incoming-webhook,commands</oauth_entity_scope>
+        <sys_class_name>oauth_entity_scope</sys_class_name>
+        <sys_created_by>kvallams</sys_created_by>
+        <sys_created_on>2017-02-20 10:43:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>33bf483ddb417200378fd450cf9619ac</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Slack App scopes</sys_name>
+        <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
+        <sys_update_name>oauth_entity_scope_33bf483ddb417200378fd450cf9619ac</sys_update_name>
+        <sys_updated_by>kvallams</sys_updated_by>
+        <sys_updated_on>2017-02-20 10:43:39</sys_updated_on>
+    </oauth_entity_scope>
+</record_update>
