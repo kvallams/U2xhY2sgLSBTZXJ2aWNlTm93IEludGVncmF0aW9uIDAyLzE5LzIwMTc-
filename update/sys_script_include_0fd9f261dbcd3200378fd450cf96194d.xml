@@ -10,10 +10,25 @@
         <script><![CDATA[var SlackAppHelper = Class.create();
 SlackAppHelper.prototype = {
 	_endpoint:'',
+	_snow_user_id:'',
+	_snow_user_pass:'',
 	initialize: function() {
 		this._endpoint = gs.getProperty('glide.servlet.uri')+'api/now/table/';
+		try{
+			var user_gr = new GlideRecord('sys_user');
+			if(user_gr.get('sys_id',gs.getProperty('x_12684_slack_app.SlackUsersys_id'))){
+				this._snow_user_id = user_gr.getValue('user_name');
+				this._snow_user_pass = user_gr.getValue('user_password');
+			}
+			else{
+				gs.error('SlackAppHelper:: User doesnot exist::UserSysID:'+gs.getProperty('x_12684_slack_app.SlackUsersys_id'));
+			}
+		}
+		catch (ex) {
+			gs.error("SlackAppHelper::There was an error retreving user information", ex);
+		}
 	},
-//function to configure the ServiceNow to interact with Slack app
+	//function to configure the ServiceNow to interact with Slack app
 	configureApp: function(){
 		var json = new global.JSON();
 		var oauthProviderReqBody = {
@@ -48,104 +63,144 @@ SlackAppHelper.prototype = {
 		var respRestMessage = json.decode(this._restCaller(this._endpoint+'sys_rest_message?sysparam_fields=sys_id','POST',restMessageReqBody));
 		gs.debug('APP configuration complete');
 	},
-//Parse request for table operations
+	//Parse request for table operations
 	reqParser: function(reqParams){
 		var reqObj={};
-		var json = new global.JSON();
-		var endpoint = gs.getProperty('glide.servlet.uri')+'api/now/table/';
-		var text =  reqParams.text.toString().trim();
-		//check if the operation is match
-		if(text.match(/^-(get)\s(INC|CHG|TASK|CHGTASK)(?:\d)+/g)){
-			reqObj.operation = 'get';
-			reqObj.ticket = text.match(/(INC|CHG|TASK|CHGTASK)(?:\d)+/g);
-		}
-		else if(text.match(/^-help+$/g)){
-			reqObj.operation = 'help';
-		}
-		else if(text.match(/^-(update)\s(INC|CHG|TASK|CHGTASK)(?:\d)+\s(?:((?:\w)+(?:\=)+(?:\w|\s)+)\s)+end$/g)){
-			reqObj.operation = 'update';
-			reqObj.ticket = text.match(/(INC|CHG|TASK|CHGTASK)(?:\d)+/g).toString();
-			reqObj.fieldInfo = text.match(/(?:\w)+=(?:\w|\s)+(?=\s)/g);
-		}
-		else{
-			reqObj.operation = 'error';
-		}
-		return this._reqHandler(reqObj);
-	},
-	_reqHandler:function(reqObj){
-		var json = new global.JSON();
-		var responseBody = {
-			text: "",
-			attachments: []
-		};
-		if(reqObj.operation == 'help'){
-			responseBody.text = 'ServiceNow command API, Please use below commands for accessing servicenow.';
-			responseBody.attachments.push(new this._createObj('/SNow -help provide the command API details')); 
-			responseBody.attachments.push(new this._createObj('/SNow -get [ticket number] will retrive ticket info.'));
-			responseBody.attachments.push(new this._createObj('/SNow -update [ticket number] [operation=value] [operation=value] operation can be field values such as comment,assign. Command will update the ticket based on the operation'));
-			//gs.info(responseBody.attachments.length);
-		}
-		if(reqObj.operation == 'get'){
-			var ticketInfo = json.decode(this._restCaller(this._endpoint+'task?sysparm_query=number%3D'+reqObj.ticket+'&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=number%2Copened_by%2Cstate%2Ccmdb_ci%2Cshort_description%2Cdescription%2Cassigned_to&sysparm_limit=1','GET',''));
-			//this._printObj(ticketInfo);
-			responseBody.text = 'Details of Ticket: '+reqObj.ticket;
-			for(var key in ticketInfo.result[0]){
-				responseBody.attachments.push(new this._createObj(key+': '+ticketInfo.result[0][key]));
+			var json = new global.JSON();
+			//var endpoint = gs.getProperty('glide.servlet.uri')+'api/now/table/';
+			var text =  reqParams.text.toString().trim();
+			//check if the operation is match
+			if(text.match(/^-(get)\s(INC|CHG|TASK|CHGTASK)(?:\d)+/g)){
+				reqObj.operation = 'get';
+				reqObj.ticket = text.match(/(INC|CHG|TASK|CHGTASK)(?:\d)+/g);
 			}
-		}
-		if(reqObj.operation == 'update'){
+			else if(text.match(/^-help+$/g)){
+				reqObj.operation = 'help';
+			}
+			else if(text.match(/^-(update)\s(INC|CHG|TASK|CHGTASK)(?:\d)+\s(?:((?:\w)+(?:\=)+(?:\w|\s)+)\s)+end$/g)){
+				reqObj.operation = 'update';
+				reqObj.ticket = text.match(/(INC|CHG|TASK|CHGTASK)(?:\d)+/g).toString();
+				reqObj.fieldInfo = text.match(/(?:\w)+=(?:\w|\s)+(?=\s)/g);
+			}
+			else{
+				reqObj.operation = 'error';
+			}
+			return this._reqHandler(reqObj);
+		},
+		_reqHandler:function(reqObj){
+			var json = new global.JSON();
+			var responseBody = {
+				text: "",
+				attachments: []
+			};
+			if(reqObj.operation == 'help'){
+				responseBody.text = 'ServiceNow command API, Please use below commands for accessing servicenow.';
+				responseBody.attachments.push(new this._createObj('"/SNow -help" provide the command API details'));
+				responseBody.attachments.push(new this._createObj('"/SNow -get [ticket number]" will retrive ticket info.'));
+				responseBody.attachments.push(new this._createObj('"/SNow -update [ticket number] [operation=value] [operation=value] end" operation can be field values such as comment,assign. Command will update the ticket based on the operation'));
+				//gs.info(responseBody.attachments.length);
+			}
+			// get operation to get ticket informantion
+			if(reqObj.operation == 'get'){
+				
+				try{
+					var ticketInfo = json.decode(this._restCaller(this._endpoint+'task?sysparm_query=number%3D'+reqObj.ticket+'&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=number%2Copened_by%2Cstate%2Ccmdb_ci%2Cshort_description%2Cdescription%2Cassigned_to&sysparm_limit=1','GET',''));
+					responseBody.text = 'Details of Ticket: '+reqObj.ticket;
+					for(var key in ticketInfo.result[0]){
+						responseBody.attachments.push(new this._createObj(key+': '+ticketInfo.result[0][key]));
+					}
+					gs.debug('SlackAppHelper::'+this._printObj(ticketInfo));
+				}
+				catch (ex) {
+					responseBody.attachments.push(new this._createObj('Error'+': '+'Oops! something went wrong, Please contact ServiceNow admins'));
+					gs.error("SlackAppHelper::There was an error retreving ticket information", ex);
+				}
+			}
+			// update operation to update ticket
+			gs.info('SlackAppHelper::incide update operation'+reqObj.operation);
+			if(reqObj.operation == 'update'){
+				gs.info('SlackAppHelper::incide update operation');
+				var ticket_sys_id;
+				try{
+					ticket_sys_id = json.decode(this._restCaller(this._endpoint+'task?sysparm_query=number%3D'+reqObj.ticket+'&sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_fields=sys_id&sysparm_limit=1','GET','')).result[0].sys_id;
+				}
+				catch(ex){
+					gs.error("SlackAppHelper::There was an error retreving ticket information", ex);
+				}
+				gs.info('SlackAppHelper::ticket_sys_id'+ticket_sys_id);
+				if(ticket_sys_id){
+					gs.info('SlackAppHelper::fieldinfo::'+reqObj.fieldInfo.join());
+					var requestBody={};
+						for(var i=0;i<reqObj.fieldInfo.length;i++){
+							var keyValue = reqObj.fieldInfo[i].split('=');
+							gs.info('SlackAppHelper::'+keyValue[0]+'::'+keyValue[1]);
+							requestBody[keyValue[0]] = keyValue[1];
+						}
+						//rest call to update a ticket
+						var requestBodyString = json.encode(requestBody);
+						gs.info('SlackAppHelper::RequestBody::'+requestBodyString);					this._restCaller(this._endpoint+'task/'+ticket_sys_id,'PUT',requestBodyString);
+						responseBody.text = 'Details of Ticket: '+reqObj.ticket;
+						responseBody.attachments.push(new this._createObj('Ticket has been updated!'));
+					}
+					else{
+						responseBody.attachments.push(new this._createObj('Error'+': '+'Oops! The ticket you have requested to update doesnot exist.'));
+						gs.error("SlackAppHelper::There was an error retreving ticket information", ex);
+					}
+				}
+			if(reqObj.operation == 'error'){
+				responseBody.attachments.push(new this._createObj('Error'+': '+'Oops! Please check the syntax use -help to check the guide'));
+			}
+				return responseBody;
+				
+			},
+			//Private rest caller method used to make rest calls for table operations
+			_restCaller: function(endpoint,method,requestBody){
+				var request = new sn_ws.RESTMessageV2();
+				request.setEndpoint(endpoint);
+				request.setHttpMethod(method);
+				var user = this._snow_user_id;
+				var password = 'root';
+				gs.info(user+'::'+password);
+				request.setBasicAuth(user,password);
+				request.setRequestHeader("Accept","application/json");
+				request.setRequestHeader('Content-Type','application/json');
+				if(requestBody != ''){
+					request.setRequestBody(requestBody);
+				}
+				gs.debug(request.getRequestBody());
+				var response = request.execute();
+				gs.debug(response.getStatusCode());
+				gs.debug(response.getErrorCode());
+				gs.debug(response.getErrorMessage());
+				gs.debug(response.getBody());
+				return response.getBody();
+			},
+			_createObj: function(value){
+				this.text = value;
+			},
+			_printObj:function(obj){
+				var result='';
+				for(var key in obj){
+					result=result+','+key+'::'+obj[key];
+				}
+				gs.info(result);
+			},
 			
-		}
-		return responseBody;
-		
-	},
-//Private rest caller method used to make rest calls for table operations
-	_restCaller: function(endpoint,method,requestBody){
-		var request = new sn_ws.RESTMessageV2();
-		request.setEndpoint(endpoint);
-		request.setHttpMethod(method);
-		var user = 'kvallams';
-		var password = 'root';
-		request.setBasicAuth(user,password);
-		request.setRequestHeader("Accept","application/json");
-		request.setRequestHeader('Content-Type','application/json');
-		if(requestBody != ''){
-			request.setRequestBody(requestBody);
-		}
-		gs.info(request.getRequestBody());
-		var response = request.execute();
-		gs.info(response.getStatusCode());
-		gs.info(response.getErrorCode());
-		gs.info(response.getErrorMessage());
-		gs.info(response.getBody());
-		return response.getBody();
-	},
-	_createObj: function(value){
-		this.text = value;
-	},
-	_printObj:function(obj){
-		var result='';
-		for(var key in obj){
-			result=result+','+key+'::'+obj[key];
-		}
-		gs.info(result);
-	},
-	
-	type: 'SlackAppHelper'
-};]]></script>
+			type: 'SlackAppHelper'
+		};]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>kvallams</sys_created_by>
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>56</sys_mod_count>
+        <sys_mod_count>74</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>read</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
-        <sys_updated_by>kvallams</sys_updated_by>
-        <sys_updated_on>2017-02-23 01:44:34</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-06-01 19:53:48</sys_updated_on>
     </sys_script_include>
 </record_update>
