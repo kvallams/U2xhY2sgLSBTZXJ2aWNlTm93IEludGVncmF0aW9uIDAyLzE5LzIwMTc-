@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Condition builder" max_length="40" name="x_12684_slack_app_condition_builder" type="collection">
+        <element label="Table" mandatory="true" max_length="40" name="table" type="table_name"/>
+        <element attributes="extended_operators=VALCHANGES;CHANGESFROM;CHANGESTO" dependent="table" dependent_on_field="table" label="Conditions" max_length="4000" name="u_conditions" type="conditions" use_dependent_field="true"/>
+    </element>
+</database>

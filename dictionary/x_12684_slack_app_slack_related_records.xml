@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Slack Related Records" max_length="40" name="x_12684_slack_app_slack_related_records" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Slack Group ID" max_length="40" name="slack_group_id" type="string"/>
+        <element label="Task" max_length="40" name="task" reference="task" type="reference"/>
+    </element>
+</database>
