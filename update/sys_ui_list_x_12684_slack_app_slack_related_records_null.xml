@@ -58,11 +58,11 @@
             <sum>false</sum>
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:08</sys_created_on>
+            <sys_created_on>2017-06-26 21:19:18</sys_created_on>
             <sys_customer_update>true</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>397da8a3db133200378fd450cf961948</sys_id>
+            <sys_id>eb899fd2dbe37200378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>x_12684_slack_app_slack_related_records</sys_name>
             <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
@@ -71,8 +71,8 @@
             <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
             <sys_update_name>sys_ui_list_x_12684_slack_app_slack_related_records_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:08</sys_updated_on>
-            <sys_user/>
+            <sys_updated_on>2017-06-26 21:19:18</sys_updated_on>
+            <sys_user display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</sys_user>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>
         </sys_ui_list>
