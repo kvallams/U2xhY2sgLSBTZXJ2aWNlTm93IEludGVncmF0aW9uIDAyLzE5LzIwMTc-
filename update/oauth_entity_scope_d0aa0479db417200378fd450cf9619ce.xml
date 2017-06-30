@@ -2,7 +2,7 @@
 <record_update table="oauth_entity_scope">
     <oauth_entity_scope action="INSERT_OR_UPDATE">
         <name>test</name>
-        <oauth_entity display_value="slack">1a0a4369dbcd3200378fd450cf961926</oauth_entity>
+        <oauth_entity display_value="">1a0a4369dbcd3200378fd450cf961926</oauth_entity>
         <oauth_entity_scope>incomingwebhook,commands</oauth_entity_scope>
         <sys_class_name>oauth_entity_scope</sys_class_name>
         <sys_created_by>kvallams</sys_created_by>

@@ -5,24 +5,24 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_12684_slack_app_condition_builder</name>
+        <name>x_12684_slack_app_user_mapper</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2017-06-18 22:50:55</sys_created_on>
+        <sys_created_on>2017-06-25 16:42:33</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
-        <sys_id>67c1e2f3db9b3200378fd450cf961936</sys_id>
+        <sys_id>d47fa326db233200378fd450cf96194e</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>x_12684_slack_app_condition_builder</sys_name>
+        <sys_name>x_12684_slack_app_user_mapper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
-        <sys_update_name>ua_table_licensing_config_67c1e2f3db9b3200378fd450cf961936</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_d47fa326db233200378fd450cf96194e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-06-18 22:50:55</sys_updated_on>
+        <sys_updated_on>2017-06-25 16:42:33</sys_updated_on>
     </ua_table_licensing_config>
 </record_update>

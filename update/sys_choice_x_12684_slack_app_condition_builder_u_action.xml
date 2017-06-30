@@ -39,25 +39,6 @@
             <sys_updated_on>2017-06-22 21:44:05</sys_updated_on>
             <value>create_channel</value>
         </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>u_action</element>
-            <hint>query to identify list of users to be invited to a group</hint>
-            <inactive>false</inactive>
-            <label>Invite</label>
-            <language>en</language>
-            <name>x_12684_slack_app_condition_builder</name>
-            <sequence/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-25 19:02:46</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_id>3270f14adb633200378fd450cf9619dd</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-25 19:02:46</sys_updated_on>
-            <value>invite</value>
-        </sys_choice>
         <sys_choice_set action="INSERT_OR_UPDATE">
             <element>u_action</element>
             <name>x_12684_slack_app_condition_builder</name>
@@ -65,7 +46,7 @@
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-06-20 21:26:54</sys_created_on>
             <sys_customer_update>false</sys_customer_update>
-            <sys_id>fcc12428db233200378fd450cf961990</sys_id>
+            <sys_id>557fe326db233200378fd450cf9619b2</sys_id>
             <sys_mod_count>7</sys_mod_count>
             <sys_name>u_action</sys_name>
             <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>

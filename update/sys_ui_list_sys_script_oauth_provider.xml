@@ -117,7 +117,7 @@
             <sys_update_name>sys_ui_list_sys_script_oauth_provider</sys_update_name>
             <sys_updated_by>kvallams</sys_updated_by>
             <sys_updated_on>2017-02-20 04:32:24</sys_updated_on>
-            <sys_user display_value="kalyan vallamsetla">ca8f92e1db8d3200378fd450cf961965</sys_user>
+            <sys_user display_value="">ca8f92e1db8d3200378fd450cf961965</sys_user>
             <view display_value="OAuth Provider" name="oauth_provider">6bb76b13d7232100f20bc8170e6103a4</view>
             <view_name/>
         </sys_ui_list>

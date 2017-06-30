@@ -6,7 +6,6 @@
             <choice>
                 <element label="Close Channel" value="close_channel"/>
                 <element label="Create Channel" value="create_channel"/>
-                <element hint="query to identify list of users to be invited to a group" label="Invite" value="invite"/>
             </choice>
         </element>
         <element attributes="extended_operators=VALCHANGES;CHANGESFROM;CHANGESTO" dependent="table" dependent_on_field="table" label="Conditions" max_length="4000" name="u_conditions" type="conditions" use_dependent_field="true"/>
