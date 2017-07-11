@@ -177,8 +177,7 @@ SlackAppHelper.prototype = {
 					var responseBody = response.getBody();
 					var httpStatus = response.getStatusCode();
 					var respBodyObj = this.json.decode(responseBody);
-					gs.info('SlackAppHelper::responseBody'+responseBody);
-					gs.info('SlackAppHelper::group id::'+respBodyObj.group.id);
+					gs.debug('SlackAppHelper::responseBody'+responseBody);
 					if(respBodyObj.group.id){
 						var gr = new GlideRecord('x_12684_slack_app_slack_related_records');
 						gr.task = current.sys_id;
@@ -192,8 +191,8 @@ SlackAppHelper.prototype = {
 						var response_set_purpose = r_set_purpose.execute();
 						var responseBody_set_purpose = response_set_purpose.getBody();
 						var httpStatus_set_purpose = response_set_purpose.getStatusCode();
-						gs.info('SlackAppHelper::responseBody_set_purpose'+responseBody_set_purpose);
-						gs.info('SlackAppHelper::httpStatus_set_purpose::'+httpStatus_set_purpose);
+						gs.debug('SlackAppHelper::responseBody_set_purpose'+responseBody_set_purpose);
+						//gs.info('SlackAppHelper::httpStatus_set_purpose::'+httpStatus_set_purpose);
 						var post_message = {
 							text: "",
 							attachments: []
@@ -212,7 +211,7 @@ SlackAppHelper.prototype = {
 						r_post_message.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
 						var response_post_message = r_post_message.execute();
 						var responseBody_post_message = response_post_message.getBody();
-						var httpStatus_post_message = response_post_message.getStatusCode();	
+						var httpStatus_post_message = response_post_message.getStatusCode();
 					}
 					else{
 						gs.addInfoMessage('Private Slack channel exists:'+respBodyObj.group.id);
@@ -239,7 +238,7 @@ SlackAppHelper.prototype = {
 					var httpStatus3 = response3.getStatusCode();
 					gs.debug('SlackAppHelper::messages length::'+response3.getBody());
 					if(responseBody3.messages.length>0){
-						slack_group_gr.channel_history = 'Slack chat history:\n'+this.json.encode(responseBody3.messages);
+						slack_group_gr.channel_history = this.json.encode(responseBody3.messages);
 						slack_group_gr.active = false;
 						slack_group_gr.update();
 					}
@@ -270,7 +269,7 @@ SlackAppHelper.prototype = {
 			//check if a Slack channel already exists for current record
 			checkChannelExist: function(current){
 				var gr_rel_rec = new GlideRecord('x_12684_slack_app_slack_related_records');
-				gr_rel_rec.addEncodedQuery('active=true^task='+current.sys_id.toString());
+				gr_rel_rec.addEncodedQuery('task='+current.sys_id.toString());
 				gr_rel_rec.query();
 				if(gr_rel_rec.next()){
 					return gr_rel_rec;
@@ -336,6 +335,18 @@ SlackAppHelper.prototype = {
 								}
 							}
 						}
+						//get assigned to of all child tasks
+						if(gr_condition.u_additional_invitees){
+							var gr_task = new GlideRecord('task');
+							gr_task.addEncodedQuery('parent='+current.sys_id);
+							gr_task.query();
+							while(gr_task.next()){
+								if(gr_task.assigned_to){
+									user_list.push(gr_task.assigned_to.sys_id.toString());
+								}
+							}
+						}
+						
 						gs.debug('SlackAppHelper::getUserList::user_list'+user_list.join());
 						gs.debug('SlackAppHelper::getUserList::groups_list'+groups_list.join());
 						//get slack user id's for all the users
@@ -407,7 +418,7 @@ SlackAppHelper.prototype = {
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>127</sys_mod_count>
+        <sys_mod_count>135</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>read</sys_policy>
@@ -415,6 +426,6 @@ SlackAppHelper.prototype = {
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-06-30 19:31:42</sys_updated_on>
+        <sys_updated_on>2017-07-07 22:47:30</sys_updated_on>
     </sys_script_include>
 </record_update>

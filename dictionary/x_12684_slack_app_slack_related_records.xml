@@ -2,7 +2,7 @@
 <database>
     <element label="Slack Related Records" max_length="40" name="x_12684_slack_app_slack_related_records" type="collection">
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
-        <element label="Channel History" max_length="40000" name="channel_history" type="journal"/>
+        <element label="Channel History" max_length="100000" name="channel_history" type="string"/>
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
         <element label="Slack Group ID" max_length="40" name="slack_group_id" type="string"/>
         <element label="Task" max_length="40" name="task" reference="task" type="reference"/>
