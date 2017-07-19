@@ -6,6 +6,7 @@
         <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
         <element label="Slack Group ID" max_length="40" name="slack_group_id" type="string"/>
         <element label="Task" max_length="40" name="task" reference="task" type="reference"/>
+        <element label="Channel History Formatted" max_length="4000" name="u_channel_history_formatted" type="string"/>
         <index name="index">
             <element name="task"/>
         </index>
