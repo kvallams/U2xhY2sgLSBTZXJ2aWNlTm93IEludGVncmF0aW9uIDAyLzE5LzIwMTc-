@@ -170,7 +170,7 @@ SlackAppHelper.prototype = {
 			createChannel: function(current){
 				try {
 					var r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Create private channel');
-					r.setQueryParameter('name',current.getDisplayValue('number'));
+					r.setQueryParameter('name',current.getDisplayValue());
 					r.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
 					var response = r.execute();
 					gs.debug('SlackAppHelper::Slack Integration Creating Channel');
@@ -180,7 +180,9 @@ SlackAppHelper.prototype = {
 					gs.debug('SlackAppHelper::responseBody'+responseBody);
 					if(respBodyObj.group.id){
 						var gr = new GlideRecord('x_12684_slack_app_slack_related_records');
-						gr.task = current.sys_id;
+						gr.task = current.number;
+						gr.u_table = current.getTableName();
+						gr.u_ticket_sys_id = current.sys_id.toString();
 						gr.slack_group_id = respBodyObj.group.id;
 						gr.insert();
 						gs.addInfoMessage('Private Slack channel has been created:'+respBodyObj.group.id);
@@ -193,25 +195,10 @@ SlackAppHelper.prototype = {
 						var httpStatus_set_purpose = response_set_purpose.getStatusCode();
 						gs.debug('SlackAppHelper::responseBody_set_purpose'+responseBody_set_purpose);
 						//gs.info('SlackAppHelper::httpStatus_set_purpose::'+httpStatus_set_purpose);
-						var post_message = {
-							text: "",
-							attachments: []
-						};
-						post_message.text = 'Details of Ticket: '+current.number.toString();
-						post_message.attachments.push(new this._createObj('Short Description: '+current.getValue('short_description')));
-						post_message.attachments.push(new this._createObj('Description: '+current.getValue('description')));
-						post_message.attachments.push(new this._createObj('Priority: '+current.getDisplayValue('priority')));
-						post_message.attachments.push(new this._createObj('Caller: '+current.getDisplayValue('opened_by')));
-						post_message.attachments.push(new this._createObj('Assignment Group: '+current.getDisplayValue('assignment_group')));
-						post_message.attachments.push(new this._createObj('Assigned to : '+current.getDisplayValue('assigned_to')));
-						var r_post_message = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API','Post ticket details to channel');
-						r_post_message.setQueryParameter('channel',respBodyObj.group.id);
-						r_post_message.setQueryParameter('text',this.json.encode(post_message.text));
-						r_post_message.setQueryParameter('attachments',this.json.encode(post_message.attachments));
-						r_post_message.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
-						var response_post_message = r_post_message.execute();
-						var responseBody_post_message = response_post_message.getBody();
-						var httpStatus_post_message = response_post_message.getStatusCode();
+						//generate message to be posted on to the channel
+						var message  = this.generatePostMessage(current,'create_channel');
+						//post the message on to the channel respBodyObj.group.id
+						this.postMessage(message,respBodyObj.group.id);
 					}
 					else{
 						gs.addInfoMessage('Private Slack channel exists:'+respBodyObj.group.id);
@@ -229,7 +216,8 @@ SlackAppHelper.prototype = {
 			//This function will close the channel based on the conditions specified in the condition builder
 			closeChannel: function(current,slack_group_gr){
 				try {
-					gs.debug('SlackAppHelper::Incident Resolved::Retreiving channel history;');
+					
+					gs.debug('SlackAppHelper::Ticket Resolved::Retreiving channel history;');
 					var q = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get channel history');
 					q.setQueryParameter('channel',slack_group_gr.slack_group_id);
 					q.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
@@ -242,6 +230,8 @@ SlackAppHelper.prototype = {
 						slack_group_gr.active = false;
 						slack_group_gr.update();
 					}
+					var close_message = this.generatePostMessage(current,'close_channel');
+					this.postMessage(close_message,slack_group_gr.slack_group_id);
 					
 				}
 				catch(ex) {
@@ -251,10 +241,6 @@ SlackAppHelper.prototype = {
 				try {
 					gs.debug('SlackAppHelper::Closing private channel');
 					var r2 = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Close a private channel');
-					
-					//override authentication profile
-					//authentication type ='basic'/ 'oauth2'
-					//r.setAuthentication(authentication type, profile name);
 					r2.setQueryParameter('channel',slack_group_gr.slack_group_id);
 					r2.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
 					var response2 = r2.execute();
@@ -266,10 +252,45 @@ SlackAppHelper.prototype = {
 					gs.error("SlackAppHelper::There was an error in closing channel", ex);
 				}
 			},
+			//post message on to the channel
+			postMessage: function(post_message,group_id){
+				var r_post_message = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API','Post ticket details to channel');
+				r_post_message.setQueryParameter('channel',group_id);
+				r_post_message.setQueryParameter('text',this.json.encode(post_message.text));
+				r_post_message.setQueryParameter('attachments',this.json.encode(post_message.attachments));
+				r_post_message.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
+				var response_post_message = r_post_message.execute();
+				var responseBody_post_message = response_post_message.getBody();
+				var httpStatus_post_message = response_post_message.getStatusCode();
+				gs.debug('SlackAppHelper::response_post_message::'+responseBody_post_message);
+			},
+			//generate post message to be posted on to the channel with ticket details
+			generatePostMessage: function(current,action){
+				var column_list = [];
+				var post_message = {
+					text: "",
+					attachments: []
+				};
+				post_message.text = 'Details of Ticket: '+current.number.toString();
+				var gr_post_message =  new GlideRecord('x_12684_slack_app_condition_builder');
+				gr_post_message.addEncodedQuery('table='+current.getTableName()+'^u_action='+action);
+				//table=incident^u_action=create_channel
+				gr_post_message.query();
+				if(gr_post_message.next()){
+					column_list = gr_post_message.u_fields_to_be_added_to_channel.split(',');
+					gs.info('SlackAppHelper::fields to be added::'+gr_post_message.u_fields_to_be_added_to_channel);
+				}
+				gs.info('SlackAppHelper::Column List::'+column_list.join());
+				for(var i = 0;i<column_list.length;i++){
+					gs.info('SlackAppHelper::Labels to be added::'+current[column_list[i].toString()].getDisplayValue());
+					post_message.attachments.push(new this._createObj(current.getElement(column_list[i]).getLabel()+': '+current[column_list[i].toString()].getDisplayValue()));
+				}
+				return post_message;
+			},
 			//check if a Slack channel already exists for current record
 			checkChannelExist: function(current){
 				var gr_rel_rec = new GlideRecord('x_12684_slack_app_slack_related_records');
-				gr_rel_rec.addEncodedQuery('task='+current.sys_id.toString());
+				gr_rel_rec.addEncodedQuery('u_ticket_sys_id='+current.sys_id.toString());
 				gr_rel_rec.query();
 				if(gr_rel_rec.next()){
 					return gr_rel_rec;
@@ -418,7 +439,7 @@ SlackAppHelper.prototype = {
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>135</sys_mod_count>
+        <sys_mod_count>149</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>read</sys_policy>
@@ -426,6 +447,6 @@ SlackAppHelper.prototype = {
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-07-07 22:47:30</sys_updated_on>
+        <sys_updated_on>2017-07-25 22:52:26</sys_updated_on>
     </sys_script_include>
 </record_update>

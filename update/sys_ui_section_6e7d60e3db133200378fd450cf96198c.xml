@@ -5,13 +5,13 @@
             <element>.begin_split</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>ea7d24e3db133200378fd450cf9619f9</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>b2dcfc7bdb480300378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type>.begin_split</type>
         </sys_ui_element>
@@ -19,13 +19,13 @@
             <element>number</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>e27d24e3db133200378fd450cf9619fa</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>36dcfc7bdb480300378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -33,97 +33,125 @@
             <element>slack_group_id</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>667d24e3db133200378fd450cf9619fa</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>b6dcfc7bdb480300378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>3adcfc7bdb480300378fd450cf961911</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>3</position>
+            <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>e67d24e3db133200378fd450cf9619fa</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>badcfc7bdb480300378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>task</element>
-            <position>4</position>
+            <element>u_table</element>
+            <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>6a7d24e3db133200378fd450cf9619fa</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>3edcfc7bdb480300378fd450cf961911</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>task</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>bedcfc7bdb480300378fd450cf961911</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_ticket_sys_id</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>32dcfc7bdb480300378fd450cf961912</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.end_split</element>
-            <position>5</position>
+            <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-17 19:44:11</sys_created_on>
-            <sys_id>ea7d24e3db133200378fd450cf9619fa</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>b2dcfc7bdb480300378fd450cf961912</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-17 19:44:11</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>active</element>
-            <position>6</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-22 23:25:48</sys_created_on>
-            <sys_id>31201741dba33200378fd450cf9619d0</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-22 23:25:48</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
             <element>channel_history</element>
-            <position>7</position>
+            <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-06-28 19:53:44</sys_created_on>
-            <sys_id>ed29d1cfdb233200378fd450cf9619d1</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>36dcfc7bdb480300378fd450cf961912</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-28 19:53:44</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>u_channel_history_formatted</element>
-            <position>8</position>
+            <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2017-07-18 18:33:57</sys_created_on>
-            <sys_id>44b68ce5db480300378fd450cf9619d1</sys_id>
+            <sys_created_on>2017-07-25 22:16:57</sys_created_on>
+            <sys_id>b6dcfc7bdb480300378fd450cf961912</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_12684_slack_app_slack_related_records" sys_domain="global" view="Default view">6e7d60e3db133200378fd450cf96198c</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-07-18 18:33:57</sys_updated_on>
+            <sys_updated_on>2017-07-25 22:16:57</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

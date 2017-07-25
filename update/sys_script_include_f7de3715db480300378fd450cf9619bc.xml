@@ -14,7 +14,7 @@ SlackAppUIHelper.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
 		var channel_history;
 		var sys_id = this.getParameter('sysparam_param_taskSysID');
 		var gr = new GlideRecord('x_12684_slack_app_slack_related_records');
-		gr.addEncodedQuery('active=false^task='+sys_id);
+		gr.addEncodedQuery('active=false^u_ticket_sys_id='+sys_id);
 		gr.query();
 		if(gr.next()){
 			if(gr.u_channel_history_formatted == ''){
@@ -48,7 +48,7 @@ SlackAppUIHelper.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_created_on>2017-07-18 18:00:00</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>f7de3715db480300378fd450cf9619bc</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>SlackAppUIHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>read</sys_policy>
@@ -56,6 +56,6 @@ SlackAppUIHelper.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_f7de3715db480300378fd450cf9619bc</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-07-18 18:57:53</sys_updated_on>
+        <sys_updated_on>2017-07-25 22:38:12</sys_updated_on>
     </sys_script_include>
 </record_update>
