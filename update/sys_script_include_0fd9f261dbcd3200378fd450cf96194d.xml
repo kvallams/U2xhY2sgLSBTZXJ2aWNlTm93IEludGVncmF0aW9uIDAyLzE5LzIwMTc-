@@ -13,13 +13,13 @@ SlackAppHelper.prototype = {
 	_snow_user_id:'',
 	_snow_user_pass:'',
 	json:'',
-	_arrayUtil:'',
+	arrayUtil:'',
 	initialize: function() {
 		this._endpoint = gs.getProperty('glide.servlet.uri')+'api/now/table/';
 		this.json = (function(){
 			return new global.JSON();
 		})();
-		this._arrayUtil = (function(){
+		this.arrayUtil = (function(){
 			return new global.ArrayUtil();
 		})();
 		try{
@@ -342,10 +342,10 @@ SlackAppHelper.prototype = {
 								}
 							}
 							if(!gr_condition.u_user.nil()){
-								user_list = this._arrayUtil.union(user_list,gr_condition.u_user.split(','));
+								user_list = this.arrayUtil.union(user_list,gr_condition.u_user.split(','));
 							}
 							if(!gr_condition.u_group_s.nil()){
-								groups_list = this._arrayUtil.union(groups_list,gr_condition.u_group_s.split(','));
+								groups_list = this.arrayUtil.union(groups_list,gr_condition.u_group_s.split(','));
 							}
 							if(groups_list.length>0){
 								var gr_group = new GlideRecord('sys_user_grmember');
@@ -399,6 +399,25 @@ SlackAppHelper.prototype = {
 						gs.error("SlackAppHelper::There was an error in inviting user to group", ex);
 					}
 				},
+	//Retrieve Slack Users and sync with ServiceNow user profiles, use cursor for pagenination. cursor value is empty for first call.
+				syncSlackUsers: function(cursor){
+					try {
+						var sync_r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get Users');
+						sync_r.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
+						sync_r.setQueryParameter('cursor',cursor);
+						sync_r.setQueryParameter('limit',100);
+						sync_r.setQueryParameter('presence',false);
+						var response_sync_r = sync_r.execute();
+						var responseBody_sync_r = response_sync_r.getBody();
+						var httpStatus_sync_r = response_sync_r.getStatusCode();
+					gs.debug('SlackHelper::responseBody_sync_r::'+responseBody_sync_r);
+						return responseBody_sync_r;
+					
+					}
+					catch(ex) {
+						gs.error("SlackAppHelper::There was an error in retrieving users list from Slack", ex);
+					}
+				},
 				//Private rest caller method used to make rest calls for table operations
 				_restCaller: function(endpoint,method,requestBody){
 					var request = new sn_ws.RESTMessageV2();
@@ -439,14 +458,14 @@ SlackAppHelper.prototype = {
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>149</sys_mod_count>
+        <sys_mod_count>155</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy>protected</sys_policy>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-07-25 22:52:26</sys_updated_on>
+        <sys_updated_on>2017-07-27 20:14:59</sys_updated_on>
     </sys_script_include>
 </record_update>
