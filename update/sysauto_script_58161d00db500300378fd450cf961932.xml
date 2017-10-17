@@ -52,13 +52,11 @@
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-07-26 20:01:57</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>58161d00db500300378fd450cf961932</sys_id>
         <sys_mod_count>6</sys_mod_count>
         <sys_name>Sync Slack Users with ServiceNow user profiles</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sysauto_script_58161d00db500300378fd450cf961932</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

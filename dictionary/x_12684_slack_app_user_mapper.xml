@@ -4,7 +4,7 @@
         <element label="Slack User Id" mandatory="true" max_length="40" name="u_slack_user_id" type="string"/>
         <element label="Slack User Name" max_length="100" name="u_slack_user_name" type="string"/>
         <element label="Team ID" max_length="40" name="u_team_id" type="string"/>
-        <element label="User" mandatory="true" max_length="32" name="u_user" reference="sys_user" type="reference"/>
+        <element display="true" label="User" mandatory="true" max_length="32" name="u_user" reference="sys_user" type="reference"/>
         <index name="index">
             <element name="u_user"/>
         </index>

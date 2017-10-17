@@ -4,62 +4,152 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>name</element>
-            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">75643573973031001875dc334b2975df</list_id>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
             <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2014-12-12 04:10:57</sys_created_on>
-            <sys_id>39643573973031001875dc334b2975df</sys_id>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>fd589c91db010300378fd450cf96192c</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2014-12-12 04:10:57</sys_updated_on>
-        </sys_ui_list_element>
-        <sys_ui_list_element action="INSERT_OR_UPDATE">
-            <average_value>false</average_value>
-            <element>version</element>
-            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">75643573973031001875dc334b2975df</list_id>
-            <max_value>false</max_value>
-            <min_value>false</min_value>
-            <position>1</position>
-            <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2014-12-12 04:10:57</sys_created_on>
-            <sys_id>79643573973031001875dc334b2975df</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2014-12-12 04:10:57</sys_updated_on>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>active</element>
-            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">75643573973031001875dc334b2975df</list_id>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>f5589c91db010300378fd450cf96192d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>available_version</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>2</position>
             <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2014-12-12 04:10:57</sys_created_on>
-            <sys_id>b9643573973031001875dc334b2975df</sys_id>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>79589c91db010300378fd450cf96192d</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2014-12-12 04:10:57</sys_updated_on>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
-            <element>id</element>
-            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">75643573973031001875dc334b2975df</list_id>
+            <element>definition</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>3</position>
             <sum>false</sum>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2014-12-12 04:10:57</sys_created_on>
-            <sys_id>f9643573973031001875dc334b2975df</sys_id>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>f9589c91db010300378fd450cf96192d</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2014-12-12 04:10:57</sys_updated_on>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>description</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>7d589c91db010300378fd450cf96192d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>has_demo_data</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>fd589c91db010300378fd450cf96192d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>help</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>71589c91db010300378fd450cf96192e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>id</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>f1589c91db010300378fd450cf96192e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>licensable</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>75589c91db010300378fd450cf96192e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>license_model</element>
+            <list_id display_value="v_plugin" element="NULL" name="v_plugin" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e1589c91db010300378fd450cf96192c</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>kvallams</sys_created_by>
+            <sys_created_on>2017-09-05 18:15:22</sys_created_on>
+            <sys_id>f5589c91db010300378fd450cf96192e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>kvallams</sys_updated_by>
+            <sys_updated_on>2017-09-05 18:15:22</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
@@ -74,17 +164,15 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-06-28 18:38:01</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>a4d7c547db233200378fd450cf961954</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name/>
-            <sys_package/>
+            <sys_name>v_plugin</sys_name>
+            <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
-            <sys_update_name/>
+            <sys_update_name>sys_ui_list_v_plugin_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2017-06-28 18:38:01</sys_updated_on>
             <sys_user display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</sys_user>

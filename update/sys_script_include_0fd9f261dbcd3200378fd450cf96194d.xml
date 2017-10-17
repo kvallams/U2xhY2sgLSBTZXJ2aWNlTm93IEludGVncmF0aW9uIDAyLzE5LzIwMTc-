@@ -72,7 +72,29 @@ SlackAppHelper.prototype = {
 			oauth2_profile:respOauthEntityProfile.result[0].sys_id
 		};
 		var respRestMessage = this.json.decode(this._restCaller(this._endpoint+'sys_rest_message?sysparam_fields=sys_id','POST',restMessageReqBody));
-		gs.info('APP configuration complete');
+		gs.debug('APP configuration complete');
+	},
+	/*
+	Parse interactive messages responses and take necessary actions within the system and post the details back to the channel.
+ 	*/
+	interactiveMessageRespParser: function(interactiveMsgResp){
+		var responseBody = {
+			text: "",
+			attachments: []
+		};
+		gs.debug('SlackAppHelper::inside interactiveMessageRespParser');
+		var gr = new GlideRecord('x_12684_slack_app_slack_related_records');
+		gs.debug('SlackAppHelper::callback_id::'+interactiveMsgResp.callback_id);
+		gr.get('u_approval_record_sys_id',interactiveMsgResp.callback_id);
+		var gdt = new GlideDateTime();
+		gdt.setValue(interactiveMsgResp.action_ts*1000);
+		//gdt.setNumericValue(interactiveMsgResp.action_ts * 1000);
+		gr.u_responded_on = gdt.getDisplayValue();
+		gr.active = false;
+		gr.u_approval_action = interactiveMsgResp.actions[0].value;
+		gr.update();
+		responseBody.text = 'Thank you for your approval, your response has been logged in ServiceNow!';
+		return responseBody;
 	},
 	/*
 	Parse request for table operations based on the slack commad the function will identify the operation
@@ -184,6 +206,7 @@ SlackAppHelper.prototype = {
 						gr.u_table = current.getTableName();
 						gr.u_ticket_sys_id = current.sys_id.toString();
 						gr.slack_group_id = respBodyObj.group.id;
+						gr.u_type = 'channel';
 						gr.insert();
 						gs.addInfoMessage('Private Slack channel has been created:'+respBodyObj.group.id);
 						var r_set_purpose = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Set channel purpose');
@@ -254,15 +277,21 @@ SlackAppHelper.prototype = {
 			},
 			//post message on to the channel
 			postMessage: function(post_message,group_id){
-				var r_post_message = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API','Post ticket details to channel');
-				r_post_message.setQueryParameter('channel',group_id);
-				r_post_message.setQueryParameter('text',this.json.encode(post_message.text));
-				r_post_message.setQueryParameter('attachments',this.json.encode(post_message.attachments));
-				r_post_message.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
-				var response_post_message = r_post_message.execute();
-				var responseBody_post_message = response_post_message.getBody();
-				var httpStatus_post_message = response_post_message.getStatusCode();
-				gs.debug('SlackAppHelper::response_post_message::'+responseBody_post_message);
+				try{
+					var r_post_message = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API','Post ticket details to channel');
+					r_post_message.setQueryParameter('channel',group_id);
+					r_post_message.setQueryParameter('text',this.json.encode(post_message.text));
+					r_post_message.setQueryParameter('attachments',this.json.encode(post_message.attachments));
+					r_post_message.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
+					var response_post_message = r_post_message.execute();
+					var responseBody_post_message = response_post_message.getBody();
+					var httpStatus_post_message = response_post_message.getStatusCode();
+					gs.debug('SlackAppHelper::response_post_message::'+responseBody_post_message);
+				}
+				catch(ex){
+					gs.error('SlackHelper::error in posting message to slack::'+ex);
+				}
+				
 			},
 			//generate post message to be posted on to the channel with ticket details
 			generatePostMessage: function(current,action){
@@ -278,11 +307,11 @@ SlackAppHelper.prototype = {
 				gr_post_message.query();
 				if(gr_post_message.next()){
 					column_list = gr_post_message.u_fields_to_be_added_to_channel.split(',');
-					gs.info('SlackAppHelper::fields to be added::'+gr_post_message.u_fields_to_be_added_to_channel);
+					gs.debug('SlackAppHelper::fields to be added::'+gr_post_message.u_fields_to_be_added_to_channel);
 				}
-				gs.info('SlackAppHelper::Column List::'+column_list.join());
+				gs.debug('SlackAppHelper::Column List::'+column_list.join());
 				for(var i = 0;i<column_list.length;i++){
-					gs.info('SlackAppHelper::Labels to be added::'+current[column_list[i].toString()].getDisplayValue());
+					gs.debug('SlackAppHelper::Labels to be added::'+current[column_list[i].toString()].getDisplayValue());
 					post_message.attachments.push(new this._createObj(current.getElement(column_list[i]).getLabel()+': '+current[column_list[i].toString()].getDisplayValue()));
 				}
 				return post_message;
@@ -313,9 +342,14 @@ SlackAppHelper.prototype = {
 							
 							result.close_channel = gr.getValue('u_conditions');
 						}
+						if(gr.u_action == 'approval'){
+							
+							result.approval = gr.getValue('u_conditions');
+						}
 					}
 					gs.debug('SlackAppHelper::close condition::'+result.close_channel);
 					gs.debug('SlackAppHelper::create condition::'+result.create_channel);
+					gs.debug('SlackAppHelper::approval condition::'+result.approval);
 					return result;
 				},
 				//Retrieves list of slack user id to be invited to a channel being created
@@ -399,7 +433,7 @@ SlackAppHelper.prototype = {
 						gs.error("SlackAppHelper::There was an error in inviting user to group", ex);
 					}
 				},
-	//Retrieve Slack Users and sync with ServiceNow user profiles, use cursor for pagenination. cursor value is empty for first call.
+				//Retrieve Slack Users and sync with ServiceNow user profiles, use cursor for pagenination. cursor value is empty for first call.
 				syncSlackUsers: function(cursor){
 					try {
 						var sync_r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get Users');
@@ -410,9 +444,9 @@ SlackAppHelper.prototype = {
 						var response_sync_r = sync_r.execute();
 						var responseBody_sync_r = response_sync_r.getBody();
 						var httpStatus_sync_r = response_sync_r.getStatusCode();
-					gs.debug('SlackHelper::responseBody_sync_r::'+responseBody_sync_r);
+						gs.debug('SlackHelper::responseBody_sync_r::'+responseBody_sync_r);
 						return responseBody_sync_r;
-					
+						
 					}
 					catch(ex) {
 						gs.error("SlackAppHelper::There was an error in retrieving users list from Slack", ex);
@@ -456,16 +490,14 @@ SlackAppHelper.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>kvallams</sys_created_by>
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
-        <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>155</sys_mod_count>
+        <sys_mod_count>173</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>protected</sys_policy>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-07-27 20:14:59</sys_updated_on>
+        <sys_updated_by>kvallams</sys_updated_by>
+        <sys_updated_on>2017-10-17 21:49:01</sys_updated_on>
     </sys_script_include>
 </record_update>
