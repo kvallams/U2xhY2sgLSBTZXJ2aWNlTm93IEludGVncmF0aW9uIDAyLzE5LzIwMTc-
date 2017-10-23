@@ -48,11 +48,11 @@
 	approveAction.name = 'approval';
 	approveAction.text = 'Approve';
 	approveAction.type = 'button';
-	approveAction.value = 'approve';
+	approveAction.value = 'approved';
 	rejectAction.name = 'approval';
 	rejectAction.text = 'Reject';
 	rejectAction.type = 'button';
-	rejectAction.value = 'reject';
+	rejectAction.value = 'rejected';
 	approvalAction.actions=[];
 	approvalAction.actions.push(approveAction);
 	approvalAction.actions.push(rejectAction);
@@ -66,7 +66,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8dba6707db010300378fd450cf96192a</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>Push approvals to slack</sys_name>
         <sys_overrides/>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
@@ -74,7 +74,7 @@
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_8dba6707db010300378fd450cf96192a</sys_update_name>
         <sys_updated_by>kvallams</sys_updated_by>
-        <sys_updated_on>2017-10-17 21:47:43</sys_updated_on>
+        <sys_updated_on>2017-10-23 18:52:32</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
