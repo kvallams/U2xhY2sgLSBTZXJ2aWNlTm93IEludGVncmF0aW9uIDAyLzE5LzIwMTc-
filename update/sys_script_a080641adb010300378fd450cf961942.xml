@@ -5,11 +5,15 @@
         <access>package_private</access>
         <action_delete>false</action_delete>
         <action_insert>true</action_insert>
+        <action_label/>
+        <action_name/>
         <action_query>false</action_query>
+        <action_run_at/>
         <action_update>true</action_update>
         <active>true</active>
         <add_message>false</add_message>
         <advanced>true</advanced>
+        <application/>
         <change_fields>false</change_fields>
         <client_callable>false</client_callable>
         <collection>sysapproval_approver</collection>
@@ -22,8 +26,10 @@
         <is_rest>false</is_rest>
         <message/>
         <name>Create approval in slack related record</name>
+        <onclick/>
         <order>100</order>
         <priority>100</priority>
+        <read_access_action>false</read_access_action>
         <rest_method/>
         <rest_method_text/>
         <rest_service/>
@@ -59,14 +65,15 @@
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>kvallams</sys_created_by>
         <sys_created_on>2017-09-08 21:26:08</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
-        <sys_domain_path>/</sys_domain_path>
         <sys_id>a080641adb010300378fd450cf961942</sys_id>
         <sys_mod_count>26</sys_mod_count>
         <sys_name>Create approval in slack related record</sys_name>
         <sys_overrides/>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_a080641adb010300378fd450cf961942</sys_update_name>
         <sys_updated_by>kvallams</sys_updated_by>
@@ -74,5 +81,4 @@
         <template/>
         <when>after</when>
     </sys_script>
-    <sys_translated_text action="delete_multiple" query="documentkey=a080641adb010300378fd450cf961942"/>
 </record_update>

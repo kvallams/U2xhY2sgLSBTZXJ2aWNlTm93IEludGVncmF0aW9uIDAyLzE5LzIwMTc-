@@ -33,7 +33,7 @@ SlackAppHelper.prototype = {
 			}
 		}
 		catch (ex) {
-			gs.error("SlackAppHelper::There was an error retreving user information", ex);
+			gs.error("SlackAppHelper::There was an error retreving user information::"+ ex);
 		}
 	},
 	/*function to configure the ServiceNow to interact with Slack app
@@ -192,7 +192,7 @@ SlackAppHelper.prototype = {
 			createChannel: function(current){
 				try {
 					var r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Create private channel');
-					r.setQueryParameter('name',current.getDisplayValue());
+					r.setQueryParameter('name',gs.getProperty('instance_name')+' - '+current.getDisplayValue());
 					r.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
 					var response = r.execute();
 					gs.debug('SlackAppHelper::Slack Integration Creating Channel');
@@ -311,7 +311,6 @@ SlackAppHelper.prototype = {
 				}
 				gs.debug('SlackAppHelper::Column List::'+column_list.join());
 				for(var i = 0;i<column_list.length;i++){
-					gs.debug('SlackAppHelper::Labels to be added::'+current[column_list[i].toString()].getDisplayValue());
 					post_message.attachments.push(new this._createObj(current.getElement(column_list[i]).getLabel()+': '+current[column_list[i].toString()].getDisplayValue()));
 				}
 				return post_message;
@@ -347,19 +346,18 @@ SlackAppHelper.prototype = {
 							result.approval = gr.getValue('u_conditions');
 						}
 					}
-					gs.debug('SlackAppHelper::close condition::'+result.close_channel);
-					gs.debug('SlackAppHelper::create condition::'+result.create_channel);
-					gs.debug('SlackAppHelper::approval condition::'+result.approval);
+					gs.debug('SlackAppHelper::close condition::'+current.number+'::'+result.close_channel);
+					gs.debug('SlackAppHelper::create condition::'+current.number+'::'+result.create_channel);
+					gs.debug('SlackAppHelper::approval condition::'+current.number+'::'+result.approval);
 					return result;
 				},
 				//Retrieves list of slack user id to be invited to a channel being created
 				getUsersList: function(current){
-					//invite users to group
 					try{
 						gs.debug('SlackHelper::gaterting invitees to invite to group');
+						var user_group_list=[];
 						var user_list=[];
 						var slack_user_id_list=[];
-						var groups_list=[];
 						var gr_condition = new GlideRecord('x_12684_slack_app_condition_builder');
 						gr_condition.addEncodedQuery('u_action=create_channel^table='+current.getTableName());
 						gr_condition.query();
@@ -367,26 +365,29 @@ SlackAppHelper.prototype = {
 							if(!gr_condition.u_users_groups_in_fields.nil()){
 								var fields = gr_condition.u_users_groups_in_fields.split(',');
 								for(var f=0;f<fields.length;f++){
-									if(current.getElement(fields[f]).getReferenceTable() == 'sys_user' && current.getValue(fields[f])){
-										user_list.push(current.getValue(fields[f]).toString());
-									}
-									if(current.getElement(fields[f]).getReferenceTable()=='sys_user_group'&& current.getValue(fields[f])){
-										groups_list.push(current.getValue(fields[f]).toString());
+									if(current.getValue(fields[f])){
+										user_group_list.push(current.getValue(fields[f]).toString());
 									}
 								}
 							}
 							if(!gr_condition.u_user.nil()){
-								user_list = this.arrayUtil.union(user_list,gr_condition.u_user.split(','));
+								user_group_list = this.arrayUtil.union(user_group_list,gr_condition.u_user.split(','));
 							}
 							if(!gr_condition.u_group_s.nil()){
-								groups_list = this.arrayUtil.union(groups_list,gr_condition.u_group_s.split(','));
+								user_group_list = this.arrayUtil.union(user_group_list,gr_condition.u_group_s.split(','));
 							}
-							if(groups_list.length>0){
+							if(user_group_list.length>0){
 								var gr_group = new GlideRecord('sys_user_grmember');
-								gr_group.addEncodedQuery('group.sys_idIN'+groups_list.join());
+								gr_group.addEncodedQuery('group.sys_idIN'+user_group_list.join());
 								gr_group.query();
 								while(gr_group.next()){
 									user_list.push(gr_group.user.sys_id.toString());
+								}
+								var gr_user = new GlideRecord('sys_user');
+								gr_user.addEncodedQuery('sys_idIN'+user_group_list.join()+'^ORemailIN'+user_group_list.join());
+								gr_user.query();
+								while(gr_user.next()){
+									user_list.push(gr_user.sys_id.toString());
 								}
 							}
 						}
@@ -401,15 +402,33 @@ SlackAppHelper.prototype = {
 								}
 							}
 						}
-						
 						gs.debug('SlackAppHelper::getUserList::user_list'+user_list.join());
-						gs.debug('SlackAppHelper::getUserList::groups_list'+groups_list.join());
 						//get slack user id's for all the users
+						var avaiable_slack_users=[];
 						var gr_slack_user_mapper = new GlideRecord('x_12684_slack_app_user_mapper');
 						gr_slack_user_mapper.addEncodedQuery('u_user.sys_idIN'+user_list.join());
 						gr_slack_user_mapper.query();
 						while(gr_slack_user_mapper.next()){
 							slack_user_id_list.push(gr_slack_user_mapper.u_slack_user_id.toString());
+							avaiable_slack_users.push(gr_slack_user_mapper.getValue('u_user').toString());
+						}
+						//populate user mapper table if user doesnot exist in user mapper table
+						var missing_user_list = this.arrayUtil.diff(user_list,avaiable_slack_users);
+						if(missing_user_list.length > 0){
+							var missing_user_email_list=[];
+							var user_gr = new GlideRecord('sys_user');
+							user_gr.addEncodedQuery('sys_idIN'+missing_user_list.join());
+							user_gr.query();
+							while(user_gr.next()){
+								missing_user_email_list.push(user_gr.getDisplayValue('email'));
+							}
+							gs.debug('SlackAppHelper::List of slack user ids being invited to group::missing_user_email_list'+missing_user_email_list);
+							for(var z=0;z<missing_user_email_list.length;z++){
+								var slackId = this.getSlackUserByEmail(missing_user_email_list[z]);
+								if(slackId != 'user_not_found'){
+									slack_user_id_list.push(slackId);
+								}
+							}
 						}
 						gs.debug('SlackAppHelper::List of slack user ids being invited to group'+slack_user_id_list.join());
 						return slack_user_id_list;
@@ -430,13 +449,45 @@ SlackAppHelper.prototype = {
 						var httpStatus_grp = response_grp.getStatusCode();
 					}
 					catch(ex) {
-						gs.error("SlackAppHelper::There was an error in inviting user to group", ex);
+						gs.error("SlackAppHelper::There was an error in inviting user to group::"+ ex);
 					}
+				},
+				//Retrieves Slack user information using email
+				getSlackUserByEmail: function(user_email){	
+					try {
+						var r4 = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get Users by email');
+						r4.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
+						r4.setQueryParameter('email',user_email);
+						var response_user_email = r4.execute();
+						gs.debug('SlackAppHelper::getSlackUserByEmail::Response::'+response_user_email.getBody());
+						var responseBody_user_email = this.json.decode(response_user_email.getBody());
+						var httpStatus_user_email = response_user_email.getStatusCode();
+						gs.debug('SlackAppHelper::getSlackUserByEmail::Response::'+responseBody_user_email.ok);
+						if(responseBody_user_email.ok){
+							var final_member = responseBody_user_email.user;
+							var gr_mapper_imp = new GlideRecord('x_12684_slack_app_slack_user_mapper_importset');
+							gr_mapper_imp.u_name = final_member.name;
+							gr_mapper_imp.u_email = user_email;
+							gr_mapper_imp.u_id = final_member.id;
+							gr_mapper_imp.u_team_id = final_member.team_id;
+							gr_mapper_imp.insert();
+							return gr_mapper_imp.u_id;
+						}
+						else{
+							gs.error('SlackAppHelper::There was an error in retrieving user by email::'+responseBody_user_email.error);
+							return "user_not_found";
+						}
+						
+					}
+					catch(ex) {
+						gs.error("SlackAppHelper::There was an error in retrieving user by email::"+ ex);
+					}
+					
 				},
 				//Retrieve Slack Users and sync with ServiceNow user profiles, use cursor for pagenination. cursor value is empty for first call.
 				syncSlackUsers: function(cursor){
 					try {
-						var sync_r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get Users');
+						var sync_r = new sn_ws.RESTMessageV2('x_12684_slack_app.Slack Web API', 'Get Users list');
 						sync_r.setQueryParameter('token', gs.getProperty('x_12684_slack_app.authentication_token'));
 						sync_r.setQueryParameter('cursor',cursor);
 						sync_r.setQueryParameter('limit',100);
@@ -449,7 +500,7 @@ SlackAppHelper.prototype = {
 						
 					}
 					catch(ex) {
-						gs.error("SlackAppHelper::There was an error in retrieving users list from Slack", ex);
+						gs.error("SlackAppHelper::There was an error in retrieving users list from Slack::"+ ex);
 					}
 				},
 				//Private rest caller method used to make rest calls for table operations
@@ -490,14 +541,16 @@ SlackAppHelper.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>kvallams</sys_created_by>
         <sys_created_on>2017-02-20 04:29:52</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
         <sys_id>0fd9f261dbcd3200378fd450cf96194d</sys_id>
-        <sys_mod_count>174</sys_mod_count>
+        <sys_mod_count>188</sys_mod_count>
         <sys_name>SlackAppHelper</sys_name>
         <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
         <sys_policy>protected</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
         <sys_update_name>sys_script_include_0fd9f261dbcd3200378fd450cf96194d</sys_update_name>
-        <sys_updated_by>kvallams</sys_updated_by>
-        <sys_updated_on>2017-10-18 00:18:01</sys_updated_on>
+        <sys_updated_by>Kalyan.Vallamsetla@ucop.edu</sys_updated_by>
+        <sys_updated_on>2018-01-09 19:32:30</sys_updated_on>
     </sys_script_include>
 </record_update>
