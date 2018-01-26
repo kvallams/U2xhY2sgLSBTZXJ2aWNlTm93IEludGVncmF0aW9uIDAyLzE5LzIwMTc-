@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database>
-    <element attributes="email_client=true,all_tables.query_hints=true,hasLabels=true,hasWorkflow=true,live_feed=true" audit="true" extends="task" label="Incident" max_length="40" name="incident" sizeclass="149097" text_index="true" type="collection">
+    <element attributes="email_client=true,all_tables.query_hints=true,hasLabels=true,hasWorkflow=true,live_feed=true" audit="true" extends="task" label="Incident" max_length="40" name="incident" sizeclass="149101" text_index="true" type="collection">
         <element label="Slack Channel ID" max_length="40" name="x_12684_slack_app_slack_channel_id" type="string"/>
     </element>
 </database>

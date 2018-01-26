@@ -152,15 +152,15 @@
             <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_id>45981632db673200378fd450cf9619ba</sys_id>
-            <sys_mod_count>0</sys_mod_count>
+            <sys_mod_count>1</sys_mod_count>
             <sys_name>alm_hardware</sys_name>
             <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
             <sys_policy/>
             <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
             <sys_update_name>sys_ui_list_alm_hardware_null</sys_update_name>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2017-06-28 05:52:21</sys_updated_on>
+            <sys_updated_by>Kalyan.Vallamsetla@ucop.edu</sys_updated_by>
+            <sys_updated_on>2018-01-26 02:15:51</sys_updated_on>
             <sys_user display_value="">6816f79cc0a8016401c5a33be04be441</sys_user>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>
