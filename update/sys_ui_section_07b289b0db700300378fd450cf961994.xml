@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="" section_id="07b289b0db700300378fd450cf961994" sys_domain="global" table="sys_outbound_http_log" version="3" view="slack_app_view">
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>method</element>
@@ -584,15 +583,14 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>kvallams</sys_created_by>
             <sys_created_on>2017-08-22 21:47:57</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
             <sys_id>07b289b0db700300378fd450cf961994</sys_id>
             <sys_mod_count>1</sys_mod_count>
             <sys_name>sys_outbound_http_log</sys_name>
             <sys_overrides/>
             <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
             <sys_update_name>sys_ui_section_07b289b0db700300378fd450cf961994</sys_update_name>
             <sys_updated_by>Kalyan.Vallamsetla@ucop.edu</sys_updated_by>

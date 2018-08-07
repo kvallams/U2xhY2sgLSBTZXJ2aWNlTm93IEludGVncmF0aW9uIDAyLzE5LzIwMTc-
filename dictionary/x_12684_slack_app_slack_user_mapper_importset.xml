@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<database>
+<?xml version="1.0" encoding="UTF-8"?><database>
     <element extends="sys_import_set_row" label="Slack User Mapper Importset" max_length="40" name="x_12684_slack_app_slack_user_mapper_importset" type="collection">
         <element attributes="import_attribute_name=email,edge_encryption_enabled=true" label="email" max_length="40" name="u_email" type="string"/>
         <element attributes="import_attribute_name=first_name,edge_encryption_enabled=true" label="first_name" max_length="40" name="u_first_name" type="string"/>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_choice action="INSERT_OR_UPDATE" field="u_action" table="x_12684_slack_app_condition_builder" version="3">
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -13,6 +12,7 @@
             <sys_created_by>kvallams</sys_created_by>
             <sys_created_on>2017-09-07 22:01:31</sys_created_on>
             <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
             <sys_id>b03f9b39db850300378fd450cf96194e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>kvallams</sys_updated_by>
@@ -31,6 +31,7 @@
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-06-20 21:27:10</sys_created_on>
             <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
             <sys_id>30c1e828db233200378fd450cf961943</sys_id>
             <sys_mod_count>2</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
@@ -49,6 +50,7 @@
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-06-20 21:26:54</sys_created_on>
             <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
             <sys_id>d2b1a028db233200378fd450cf96196b</sys_id>
             <sys_mod_count>2</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
@@ -61,13 +63,11 @@
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-06-20 21:26:54</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
-            <sys_id>d822ee3fdb5f8f00d6d475d88c961919</sys_id>
+            <sys_id>8db056c1dbb71300ec3358b3ca961986</sys_id>
             <sys_mod_count>8</sys_mod_count>
             <sys_name>u_action</sys_name>
             <sys_package display_value="Slack App" source="x_12684_slack_app">3482f625db8d3200378fd450cf9619a0</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Slack App">3482f625db8d3200378fd450cf9619a0</sys_scope>
             <sys_update_name>sys_choice_x_12684_slack_app_condition_builder_u_action</sys_update_name>
             <sys_updated_by>Kalyan.Vallamsetla@ucop.edu</sys_updated_by>

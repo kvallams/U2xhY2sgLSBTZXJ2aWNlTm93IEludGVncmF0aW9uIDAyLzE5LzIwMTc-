@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<database>
+<?xml version="1.0" encoding="UTF-8"?><database>
     <element label="Condition builder" max_length="40" name="x_12684_slack_app_condition_builder" type="collection">
         <element label="Table" mandatory="true" max_length="40" name="table" type="table_name"/>
         <element choice="1" label="Action" mandatory="true" max_length="40" name="u_action" type="string">
             <choice>
-                <element label="Close Channel" value="close_channel"/>
-                <element label="Create Channel" value="create_channel"/>
-                <element label="Push Approval" value="approval"/>
+                <element inactive_on_update="false" label="Close Channel" value="close_channel"/>
+                <element inactive_on_update="false" label="Create Channel" value="create_channel"/>
+                <element inactive_on_update="false" label="Push Approval" value="approval"/>
             </choice>
         </element>
         <element hint="When true add's assigned to users from child tasks, if a child task exists for a table." label="Additional Invitees" max_length="40" name="u_additional_invitees" type="boolean"/>
