@@ -1,0 +1,61 @@
+Overview: 
+
+Slack Integration is ServiceNow based custom integration which includes below functionalities. 
+
+•	Retrieve and update tickets from Slack Channels. 
+•	Create a Slack Channel based on trigger conditions(priority=1) and add members to the channel.
+•	Close an existing Slack channel based on close conditions (incident state = resolved).
+•	Upon closure of the channel retrieves the channel history and display the history on the ticket in a user readable format.
+•	Automatic retrieve Slack Users and map them to their ServiceNow user profiles.
+•	Push approvals on to the Slack user channel.
+
+Highlights:
+
+•	All the server side scripting or request processing is done within in ServiceNow, which eliminates dependencies on other applications.
+•	Plug and play architecture.
+•	No interdependency on tables.
+•	No or min configuration required on ServiceNow or Slack based on the functionality being used.
+•	No or min customizations required for OOB tables, scripts etc.
+
+Technologies Used: Glide API, REST, Slack API, JavaScript, HTML5, CSS, Angular JS
+
+Detailed Description:
+
+1.	Retrieve of Ticket Information: Uses Slack Commands to post REST messages to ServiceNow.
+
+    Command: /snow –help will post API details to the channel.
+
+    Command: /snow – get <ticket_number>  will post some basic details of the ticket to the channel.
+
+    Command: /snow –update CHGXXXXXX comments=testing end will add additional comments to the ticket.
+
+Note: Needs additional configuration on Slack, creating a slack command and adding it to a channel.
+
+2.	Automatic creation and closure of Slack Channels 
+  a.	Define channel creation trigger conditions.
+      i.	Navigate to Condition Builder and create new record and all the require information as shown below.
+ 
+  b.	Define channel closure conditions.
+      i.	Navigate to the condition builder and create new record and add all the required information as below
+
+ 
+c.	Based on the conditions defined
+    i.	A private Slack Channel will be created with same name as the Display Value of the table when the create conditions are met.
+        1.	All the users defined in the create condition will be added to the Slack Channel.
+        2.	Based on the “Fields to be added to channel” defined in condition builder, the ticket info will be posted to the channel
+ 
+  ii.	A Slack Channel will be closed when the close conditions are met.
+        1.	Channel History will be retrieved and stored in ServiceNow table.
+        2.	Based on the “Fields to be added to channel” defined in condition builder, the ticket info will be posted to the channel.
+        3.	Channel will be closed/archived on the slack.
+
+
+3. User Mapper:  Slack User Mapper is a ServiceNow table which stores Slack details for a user.
+4.	Push Approvals on to the User channel: ServiceNow can push approvals on to the slack user channel.
+    a.	Use the condition builder to configure the conditions when an approval needs to be pushed on to the user channel.
+        Action: Push Approval
+        Fields to be added to channel: list of fields to be shown on the channel top provide approval summary to approver.
+        A record will be added to Slack Related records which could be used later for audit purpose.Click on the approve or reject button, the response will be logged back on to ServiceNow approval record.
+        User Approval will be logged in the activity which states that the user has approved the ticket from Slack.
+
+
